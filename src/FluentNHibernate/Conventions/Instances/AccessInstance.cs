@@ -8,103 +8,87 @@ namespace FluentNHibernate.Conventions.Instances
     {
         private readonly Action<string> setter;
 
-        public AccessInstance(Action<string> setter)
-        {
+        public AccessInstance(Action<string> setter) {
             this.setter = setter;
         }
 
-        public void Property()
-        {
+        public void Property() {
             setter("property");
         }
 
-        public void Field()
-        {
+        public void Field() {
             setter("field");
         }
 
-        public void BackField()
-        {
+        public void BackField() {
             setter("backfield");
         }
 
-        public void CamelCaseField()
-        {
+        public void CamelCaseField() {
             CamelCaseField(CamelCasePrefix.None);
         }
 
-        public void CamelCaseField(CamelCasePrefix prefix)
-        {
+        public void CamelCaseField(CamelCasePrefix prefix) {
             setter("field.camelcase" + prefix);
         }
 
-        public void LowerCaseField()
-        {
+        public void LowerCaseField() {
             LowerCaseField(LowerCasePrefix.None);
         }
 
-        public void LowerCaseField(LowerCasePrefix prefix)
-        {
+        public void LowerCaseField(LowerCasePrefix prefix) {
             setter("field.lowercase" + prefix);
         }
 
-        public void PascalCaseField(PascalCasePrefix prefix)
-        {
+        public void PascalCaseField(PascalCasePrefix prefix) {
             setter("field.pascalcase" + prefix);
         }
 
-        public void ReadOnlyProperty()
-        {
+        public void ReadOnlyProperty() {
+            setter("readonly");
+        }
+
+        public void NoSetterProperty() {
             setter("nosetter");
         }
 
-        public void ReadOnlyPropertyThroughCamelCaseField()
-        {
-            ReadOnlyPropertyThroughCamelCaseField(CamelCasePrefix.None);
+        public void NoSetterPropertyThroughCamelCaseField() {
+            NoSetterPropertyThroughCamelCaseField(CamelCasePrefix.None);
         }
 
-        public void ReadOnlyPropertyThroughCamelCaseField(CamelCasePrefix prefix)
-        {
+        public void NoSetterPropertyThroughCamelCaseField(CamelCasePrefix prefix) {
             setter("nosetter.camelcase" + prefix);
         }
 
-        public void ReadOnlyPropertyThroughLowerCaseField()
-        {
-            ReadOnlyPropertyThroughLowerCaseField(LowerCasePrefix.None);
+        public void NoSetterPropertyThroughLowerCaseField() {
+            NoSetterPropertyThroughLowerCaseField(LowerCasePrefix.None);
         }
 
-        public void ReadOnlyPropertyThroughLowerCaseField(LowerCasePrefix prefix)
-        {
+        public void NoSetterPropertyThroughLowerCaseField(LowerCasePrefix prefix) {
             setter("nosetter.lowercase" + prefix);
         }
 
-        public void ReadOnlyPropertyThroughPascalCaseField(PascalCasePrefix prefix)
-        {
+        public void NoSetterPropertyThroughPascalCaseField(PascalCasePrefix prefix) {
             setter("nosetter.pascalcase" + prefix);
         }
 
-        public void Using(string propertyAccessorAssemblyQualifiedClassName)
-        {
+        public void Using(string propertyAccessorAssemblyQualifiedClassName) {
             setter(propertyAccessorAssemblyQualifiedClassName);
         }
 
-        public void Using(Type propertyAccessorClassType)
-        {
+        public void Using(Type propertyAccessorClassType) {
             Using(propertyAccessorClassType.AssemblyQualifiedName);
         }
 
-        public void Using<TPropertyAccessorClass>() where TPropertyAccessorClass : IPropertyAccessor
-        {
+        public void Using<TPropertyAccessorClass>() where TPropertyAccessorClass : IPropertyAccessor {
             Using(typeof(TPropertyAccessorClass));
         }
 
-        public void NoOp()
-        {
+        public void NoOp() {
             setter("noop");
         }
 
-        public void None()
-        {
+        public void None() {
             setter("none");
         }
     }

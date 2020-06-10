@@ -1,158 +1,125 @@
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using FluentNHibernate.MappingModel.ClassBased;
-using FluentNHibernate.Utils;
-using FluentNHibernate.Visitors;
+using FluentNHibernate.Conventions.Helpers.Prebuilt;
+using FluentNHibernate.Conventions.Inspections;
+using NHibernate.Properties;
+using Prefix = FluentNHibernate.Mapping.Prefix;
 
-namespace FluentNHibernate.MappingModel
+namespace FluentNHibernate.Conventions.Helpers
 {
-    [Serializable]
-    public class HibernateMapping : MappingBase
+    public static class DefaultAccess
     {
-        readonly IList<ClassMapping> classes;
-        readonly IList<FilterDefinitionMapping> filters;
-        readonly IList<ImportMapping> imports;
-        readonly AttributeStore attributes;
-
-        public HibernateMapping(): this(new AttributeStore())
-        {}
-
-        public HibernateMapping(AttributeStore attributes)
-        {
-            this.attributes = attributes;
-            classes = new List<ClassMapping>();
-            filters = new List<FilterDefinitionMapping>();
-            imports = new List<ImportMapping>();
+        public static IHibernateMappingConvention Field() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.Field());
         }
 
-        public override void AcceptVisitor(IMappingModelVisitor visitor)
-        {
-            visitor.ProcessHibernateMapping(this);
-
-            foreach (var import in Imports)
-                visitor.Visit(import);
-
-            foreach (var classMapping in Classes)
-                visitor.Visit(classMapping);
-
-            foreach (var filterMapping in Filters)
-                visitor.Visit(filterMapping);
+        public static IHibernateMappingConvention BackField() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.BackField());
         }
 
-        public IEnumerable<ClassMapping> Classes
-        {
-            get { return classes; }
+        public static IHibernateMappingConvention Property() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.Property());
         }
 
-        public IEnumerable<FilterDefinitionMapping> Filters
-        {
-            get { return filters; }
+        public static IHibernateMappingConvention ReadOnlyProperty() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.ReadOnlyProperty());
         }
 
-        public IEnumerable<ImportMapping> Imports
-        {
-            get { return imports; }
+        public static IHibernateMappingConvention NoOp() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.NoOp());
         }
 
-        public void AddClass(ClassMapping classMapping)
-        {
-            classes.Add(classMapping);            
+        public static IHibernateMappingConvention None() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.None());
         }
 
-        public void AddFilter(FilterDefinitionMapping filterMapping)
-        {
-            filters.Add(filterMapping);
+        public static IHibernateMappingConvention CamelCaseField() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.CamelCaseField());
         }
 
-        public void AddImport(ImportMapping importMapping)
-        {
-            imports.Add(importMapping);
+        public static IHibernateMappingConvention CamelCaseField(CamelCasePrefix prefix) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.CamelCaseField(prefix));
         }
 
-        public string Catalog
-        {
-            get { return attributes.GetOrDefault<string>("Catalog"); }
+        public static IHibernateMappingConvention LowerCaseField() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.LowerCaseField());
         }
 
-        public string DefaultAccess
-        {
-            get { return attributes.GetOrDefault<string>("DefaultAccess"); }
+        public static IHibernateMappingConvention LowerCaseField(LowerCasePrefix prefix) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.LowerCaseField(prefix));
         }
 
-        public string DefaultCascade
-        {
-            get { return attributes.GetOrDefault<string>("DefaultCascade"); }
+        public static IHibernateMappingConvention PascalCaseField(PascalCasePrefix prefix) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.PascalCaseField(prefix));
         }
 
-        public bool AutoImport
-        {
-            get { return attributes.GetOrDefault<bool>("AutoImport"); }
+        public static IHibernateMappingConvention ReadOnlyPropertyThroughCamelCaseField() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.NoSetterPropertyThroughCamelCaseField());
         }
 
-        public string Schema
-        {
-            get { return attributes.GetOrDefault<string>("Schema"); }
+        public static IHibernateMappingConvention ReadOnlyPropertyThroughCamelCaseField(CamelCasePrefix prefix) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.NoSetterPropertyThroughCamelCaseField(prefix));
         }
 
-        public bool DefaultLazy
-        {
-            get { return attributes.GetOrDefault<bool>("DefaultLazy"); }
+        public static IHibernateMappingConvention ReadOnlyPropertyThroughLowerCaseField() {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.NoSetterPropertyThroughLowerCaseField());
         }
 
-        public string Namespace
-        {
-            get { return attributes.GetOrDefault<string>("Namespace"); }
+        public static IHibernateMappingConvention ReadOnlyPropertyThroughLowerCaseField(LowerCasePrefix prefix) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.NoSetterPropertyThroughLowerCaseField(prefix));
         }
 
-        public string Assembly
-        {
-            get { return attributes.GetOrDefault<string>("Assembly"); }
+        public static IHibernateMappingConvention ReadOnlyPropertyThroughPascalCaseField(PascalCasePrefix prefix) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.NoSetterPropertyThroughPascalCaseField(prefix));
         }
 
-        public bool Equals(HibernateMapping other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return other.classes.ContentEquals(classes) &&
-                other.filters.ContentEquals(filters) &&
-                other.imports.ContentEquals(imports) &&
-                Equals(other.attributes, attributes);
+        public static IHibernateMappingConvention Using(string value) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.Using(value));
         }
 
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(HibernateMapping)) return false;
-            return Equals((HibernateMapping)obj);
+        public static IHibernateMappingConvention Using(Type access) {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.Using(access));
         }
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int result = (classes != null ? classes.GetHashCode() : 0);
-                result = (result * 397) ^ (filters != null ? filters.GetHashCode() : 0);
-                result = (result * 397) ^ (imports != null ? imports.GetHashCode() : 0);
-                result = (result * 397) ^ (attributes != null ? attributes.GetHashCode() : 0);
-                return result;
-            }
-        }
-
-        public void Set<T>(Expression<Func<HibernateMapping, T>> expression, int layer, T value)
-        {
-            Set(expression.ToMember().Name, layer, value);
-        }
-
-        protected override void Set(string attribute, int layer, object value)
-        {
-            attributes.Set(attribute, layer, value);
-        }
-
-        public override bool IsSpecified(string attribute)
-        {
-            return attributes.IsSpecified(attribute);
+        public static IHibernateMappingConvention Using<T>() where T : IPropertyAccessor {
+            return new BuiltHibernateMappingConvention(
+                criteria => { },
+                instance => instance.DefaultAccess.Using<T>());
         }
     }
 }
