@@ -56,7 +56,7 @@ namespace FluentNHibernate.Specs.Automapping
         {
             public void Apply(IManyToOneInstance instance)
             {
-                instance.Access.ReadOnlyPropertyThroughCamelCaseField(CamelCasePrefix.Underscore);
+                instance.Access.NoSetterPropertyThroughCamelCaseField(CamelCasePrefix.Underscore);
             }
         }
     }
